@@ -8,9 +8,9 @@ import NotFound from "./components/NotFound";
 function App() {
   return (
     <BrowserRouter>
-      <main className="text-center">
-        <header>
-          <img className="mx-auto mt-8 mb-16" src="/logo-full.svg" alt="logo" />
+      <main>
+        <header className="py-8">
+          <img className="mx-auto" src="/logo-full.svg" alt="logo" />
         </header>
         <Routes>
           <Route path="/" element={<RegistrationForm />} />
