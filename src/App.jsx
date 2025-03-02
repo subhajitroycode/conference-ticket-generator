@@ -1,5 +1,3 @@
-import { useState } from "react";
-import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import RegistrationForm from "./components/RegistrationForm";
 import TicketConfirmation from "./components/TicketConfirmation";
@@ -9,8 +7,8 @@ function App() {
   return (
     <BrowserRouter>
       <main>
-        <header className="py-8">
-          <img className="mx-auto" src="/logo-full.svg" alt="logo" />
+        <header className="py-6">
+          <img className="mx-auto w-40" src="/logo-full.svg" alt="logo" />
         </header>
         <Routes>
           <Route path="/" element={<RegistrationForm />} />
