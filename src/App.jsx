@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import RegistrationForm from "./components/RegistrationForm";
-import TicketConfirmation from "./components/TicketConfirmation";
-import NotFound from "./components/NotFound";
+import RegistrationForm from "./pages/RegistrationForm";
+import TicketConfirmation from "./pages/TicketConfirmation";
+import NotFound from "./pages/NotFound";
 
 function App() {
   return (

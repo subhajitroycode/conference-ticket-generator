@@ -1,5 +1,12 @@
 import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import {
+  handleDrop,
+  handleDrag,
+  handleFile,
+  validateForm,
+} from "../utils/registrationFormUtils";
+import InputForm from "../components/InputForm";
 
 const RegistrationForm = () => {
   const [formData, setFormData] = useState({
@@ -19,67 +26,10 @@ const RegistrationForm = () => {
   const inputRef = useRef(null);
   const navigate = useNavigate();
 
-  const validateFile = (file) => {
-    if (file.size > 512000) {
-      setErrorMessage({
-        ...errorMessage,
-        avatar: "File too large. Please upload a photo under 500KB.",
-      });
-      return false;
-    }
-
-    const validTypes = ["image/jpeg", "image/jpg", "image/png"];
-    if (!validTypes.includes(file.type)) {
-      setErrorMessage({
-        ...errorMessage,
-        avatar: "Invalid file type. Please upload a JPG or PNG image.",
-      });
-      return false;
-    }
-
-    return true;
-  };
-
-  const validateEmail = (email) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const { fullName, email, githubUsername, avatar } = formData;
-    const newErrors = {
-      avatar: "",
-      fullName: "",
-      email: "",
-      githubUsername: "",
-    };
-
-    if (!fullName) {
-      newErrors.fullName = "Please enter your Full Name.";
-    }
-
-    if (!email) {
-      newErrors.email = "Please enter your Email Address.";
-    } else if (!validateEmail(email)) {
-      newErrors.email = "Please enter a valid email address.";
-    }
-
-    if (!githubUsername) {
-      newErrors.githubUsername = "Please enter your GitHub Username.";
-    }
-
-    if (!avatar) {
-      newErrors.avatar = "Please upload your photo.";
-    }
-
-    setErrorMessage(newErrors);
-
-    // Check if there are any errors
-    const hasErrors = Object.values(newErrors).some((error) => error !== "");
-
-    if (!hasErrors) {
+    if (validateForm(formData, setErrorMessage)) {
       navigate("/ticket-confirmation", {
         state: {
           userData: formData,
@@ -87,54 +37,6 @@ const RegistrationForm = () => {
         replace: true,
       });
     }
-  };
-
-  const handleDrag = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-
-    if (e.type === "dragover" || e.type === "dragenter") {
-      setDragActive(true);
-    } else if (e.type === "dragleave") {
-      setDragActive(false);
-    }
-  };
-
-  const handleDrop = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setDragActive(false);
-    setErrorMessage("");
-
-    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      const file = e.dataTransfer.files[0];
-      console.log(file);
-
-      if (validateFile(file)) {
-        const imageUrl = URL.createObjectURL(file);
-        setAvatarPreview(imageUrl);
-        setFormData({ ...formData, avatar: file });
-      }
-    }
-  };
-
-  const handleFile = (e) => {
-    e.preventDefault();
-    setErrorMessage("");
-
-    if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
-
-      if (validateFile(file)) {
-        const imageUrl = URL.createObjectURL(file);
-        setAvatarPreview(imageUrl);
-        setFormData({ ...formData, avatar: file });
-      }
-    }
-  };
-
-  const handleClick = () => {
-    if (!avatarPreview) inputRef.current.click();
   };
 
   return (
@@ -156,11 +58,23 @@ const RegistrationForm = () => {
             className={`border-2 border-dashed rounded-lg p-4 text-center h-28 bg-neutral-700/30 flex flex-col items-center justify-center relative ${
               dragActive ? "border-neutral-0" : "border-neutral-500"
             } ${!avatarPreview && "cursor-pointer hover:bg-neutral-700/70"}`}
-            onDragEnter={handleDrag}
-            onDragLeave={handleDrag}
-            onDragOver={handleDrag}
-            onDrop={handleDrop}
-            onClick={handleClick}
+            onDragEnter={(e) => handleDrag(e, setDragActive)}
+            onDragLeave={(e) => handleDrag(e, setDragActive)}
+            onDragOver={(e) => handleDrag(e, setDragActive)}
+            onDrop={(e) =>
+              handleDrop(
+                e,
+                setDragActive,
+                setErrorMessage,
+                errorMessage,
+                setAvatarPreview,
+                setFormData,
+                formData
+              )
+            }
+            onClick={() => {
+              if (!avatarPreview) inputRef.current.click();
+            }}
           >
             {avatarPreview ? (
               <div className="relative w-full h-full">
@@ -207,7 +121,15 @@ const RegistrationForm = () => {
               ref={inputRef}
               className="hidden"
               accept=".jpeg, .jpg, .png"
-              onChange={handleFile}
+              onChange={(e) =>
+                handleFile(
+                  e,
+                  setErrorMessage,
+                  setAvatarPreview,
+                  setFormData,
+                  formData
+                )
+              }
             />
           </div>
           <div className="mt-2.5 flex">
@@ -233,13 +155,9 @@ const RegistrationForm = () => {
           </div>
         </div>
         {/* Full Name */}
-        <label htmlFor="fullName" className="mb-1.5">
-          Full Name
-        </label>
-        <input
-          type="text"
+        <InputForm
           id="fullName"
-          className="px-2.5 py-2 bg-neutral-700/30 border border-neutral-500 focus:outline-2 focus:outline-offset-2 focus:outline-neutral-500 rounded-lg mb-4 hover:bg-neutral-700/70 cursor-pointer"
+          name="Full Name"
           value={formData.fullName}
           onChange={(e) =>
             setFormData({ ...formData, fullName: e.target.value })
@@ -258,13 +176,9 @@ const RegistrationForm = () => {
           </div>
         )}
         {/* Email */}
-        <label htmlFor="email" className="mb-1.5">
-          Email Address
-        </label>
-        <input
-          type="text"
+        <InputForm
           id="email"
-          className="px-2.5 py-2 bg-neutral-700/30 border border-neutral-500 focus:outline-2 focus:outline-offset-2 focus:outline-neutral-500 rounded-lg mb-4 hover:bg-neutral-700/70 cursor-pointer"
+          name="Email Address"
           value={formData.email}
           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
           placeholder="example@email.com"
@@ -282,13 +196,9 @@ const RegistrationForm = () => {
           </div>
         )}
         {/* GitHub Username */}
-        <label htmlFor="githubUsername" className="mb-1.5">
-          GitHub Username
-        </label>
-        <input
-          type="text"
+        <InputForm
           id="githubUsername"
-          className="px-2.5 py-2 bg-neutral-700/30 border border-neutral-500 focus:outline-2 focus:outline-offset-2 focus:outline-neutral-500 rounded-lg mb-4 hover:bg-neutral-700/70 cursor-pointer"
+          name="GitHub Username"
           value={formData.githubUsername}
           onChange={(e) =>
             setFormData({ ...formData, githubUsername: e.target.value })
