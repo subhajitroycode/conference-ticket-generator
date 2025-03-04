@@ -7,6 +7,7 @@ import {
   validateForm,
 } from "../utils/registrationFormUtils";
 import InputForm from "../components/InputForm";
+import ErrorComponent from "../components/ErrorComponent";
 
 const RegistrationForm = () => {
   const [formData, setFormData] = useState({
@@ -134,16 +135,7 @@ const RegistrationForm = () => {
           </div>
           <div className="mt-2.5 flex">
             {errorMessage.avatar ? (
-              <>
-                <img
-                  src="/icon-info-error.svg"
-                  alt="error info icon"
-                  className="h-3.5 w-3.5"
-                />
-                <p className="text-xs ml-1.5 text-orange-500">
-                  {errorMessage.avatar}
-                </p>
-              </>
+              <ErrorComponent errorText={errorMessage.avatar} />
             ) : (
               <>
                 <img src="/icon-info.svg" alt="info icon" />
@@ -165,14 +157,7 @@ const RegistrationForm = () => {
         />
         {errorMessage.fullName && (
           <div className="flex -mt-2.5">
-            <img
-              src="/icon-info-error.svg"
-              alt="error info icon"
-              className="h-3.5 w-3.5"
-            />
-            <p className="text-xs ml-1.5 text-orange-500">
-              {errorMessage.fullName}
-            </p>
+            <ErrorComponent errorText={errorMessage.fullName} />
           </div>
         )}
         {/* Email */}
@@ -185,14 +170,7 @@ const RegistrationForm = () => {
         />
         {errorMessage.email && (
           <div className="flex -mt-2.5">
-            <img
-              src="/icon-info-error.svg"
-              alt="error info icon"
-              className="h-3.5 w-3.5"
-            />
-            <p className="text-xs ml-1.5 text-orange-500">
-              {errorMessage.email}
-            </p>
+            <ErrorComponent errorText={errorMessage.email} />
           </div>
         )}
         {/* GitHub Username */}
@@ -207,14 +185,7 @@ const RegistrationForm = () => {
         />
         {errorMessage.githubUsername && (
           <div className="flex -mt-2.5">
-            <img
-              src="/icon-info-error.svg"
-              alt="error info icon"
-              className="h-3.5 w-3.5"
-            />
-            <p className="text-xs ml-1.5 text-orange-500">
-              {errorMessage.githubUsername}
-            </p>
+            <ErrorComponent errorText={errorMessage.githubUsername} />
           </div>
         )}
         {/* Submit Button */}
