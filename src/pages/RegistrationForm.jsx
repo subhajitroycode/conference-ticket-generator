@@ -1,10 +1,11 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   handleDrop,
   handleDrag,
   handleFile,
   validateForm,
+  getTicketNumber,
 } from "../utils/registrationFormUtils";
 import InputForm from "../components/InputForm";
 import ErrorComponent from "../components/ErrorComponent";
@@ -15,6 +16,7 @@ const RegistrationForm = () => {
     email: "",
     githubUsername: "",
     avatar: null,
+    ticketNumber: getTicketNumber(),
   });
   const [errorMessage, setErrorMessage] = useState({
     avatar: "",

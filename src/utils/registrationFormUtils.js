@@ -111,4 +111,12 @@ const handleFile = (
   }
 };
 
-export { validateForm, handleDrag, handleDrop, handleFile };
+const getTicketNumber = () => {
+  const ticketNumber = Math.floor(Math.random() * 100000);
+
+  if (ticketNumber < 10000) return getTicketNumber();
+
+  return ticketNumber;
+};
+
+export { validateForm, handleDrag, handleDrop, handleFile, getTicketNumber };
