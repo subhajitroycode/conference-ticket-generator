@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   handleDrop,
@@ -88,6 +88,7 @@ const RegistrationForm = () => {
                 />
                 <div>
                   <button
+                    type="button"
                     className="mr-1 py-1 px-2 text-xs bg-neutral-500/30 rounded-sm cursor-pointer hover:bg-neutral-500/40"
                     onClick={(e) => {
                       e.preventDefault();
@@ -99,6 +100,7 @@ const RegistrationForm = () => {
                     Remove image
                   </button>
                   <button
+                    type="button"
                     className="ml-1 py-1 px-2 text-xs bg-neutral-500/30 rounded-sm cursor-pointer hover:bg-neutral-500/40"
                     onClick={(e) => {
                       e.preventDefault();
