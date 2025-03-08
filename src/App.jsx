@@ -6,10 +6,10 @@ import NotFound from "./pages/NotFound";
 function App() {
   return (
     <BrowserRouter>
+      <header className="py-6">
+        <img className="mx-auto w-40" src="/logo-full.svg" alt="logo" />
+      </header>
       <main>
-        <header className="py-6">
-          <img className="mx-auto w-40" src="/logo-full.svg" alt="logo" />
-        </header>
         <Routes>
           <Route path="/" element={<RegistrationForm />} />
           <Route path="/ticket-confirmation" element={<TicketConfirmation />} />

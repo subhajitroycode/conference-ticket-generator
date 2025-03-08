@@ -29,3 +29,21 @@ body {
   background-size: contain;
   background-repeat: no-repeat;
 }
+
+.error-link {
+  color: var(--color-orange-500);
+  &:visited {
+    color: var(--color-orange-700);
+  }
+}
+
+@media (width < 770px) {
+  body {
+    background: url("./pattern-lines.svg"), url("./pattern-circle.svg"),
+      url("./pattern-squiggly-line-bottom-mobile-tablet.svg"),
+      url("./pattern-squiggly-line-top.svg"), url("./background-tablet.png");
+    background-size: contain, 124px, 70%, 30%, cover;
+    background-repeat: repeat-x, no-repeat, no-repeat, no-repeat, no-repeat;
+    background-position: top, 79% 60%, left bottom, right 30px, center center;
+  }
+}

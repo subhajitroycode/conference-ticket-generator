@@ -44,10 +44,10 @@ const RegistrationForm = () => {
 
   return (
     <div className="max-w-2xl mx-auto">
-      <h1 className="font-bold text-5xl leading-14 text-center">
+      <h1 className="font-bold text-3xl md:text-5xl md:leading-14 text-center mt-4 md:mt-0">
         Your Journey to Coding Conf 2025 Starts Here!
       </h1>
-      <p className="text-lg mt-2 mb-5 text-neutral-300 text-center">
+      <p className="text-lg mt-6 md:mt-2 mb-5 px-7 text-neutral-300 text-center">
         Secure your spot at next year's biggest coding conference.
       </p>
 
