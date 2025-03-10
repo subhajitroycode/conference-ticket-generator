@@ -1,13 +1,12 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
-import NotFound from "./NotFound";
+import { Navigate, useLocation } from "react-router-dom";
 
 const TicketConfirmation = () => {
   const location = useLocation();
   const ticketData = location.state?.userData;
 
   return !ticketData ? (
-    <NotFound />
+    <Navigate to="/" />
   ) : (
     <div className="max-w-2xl mx-auto">
       <h1 className="font-bold text-3xl md:text-5xl md:leading-14 text-center px-4">
