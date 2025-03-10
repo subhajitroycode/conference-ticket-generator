@@ -52,11 +52,43 @@ Users should be able to:
 
 ### What I learned
 
-I learned about `useNavigate` hook from `react-router-dom` which is used to navigate to a different route after a form validation.
+During this project, I gained valuable experience with React Router's navigation features:
+
+1. **useNavigate Hook**: 
+   - Learned how to programmatically navigate users after form submissions
+   - Used it to redirect users to the ticket confirmation page with form data:
+   ```jsx
+   const navigate = useNavigate();
+   
+   // Navigate with state data
+   navigate("/ticket-confirmation", {
+     state: { userData: formData },
+     replace: true
+   });
+   ```
+
+2. **Navigate Component**:
+   - Discovered how to handle unauthorized access to protected routes
+   - Implemented redirect functionality for users trying to access the ticket page directly:
+   ```jsx
+   return !ticketData ? (
+     <Navigate to="/" />
+   ) : (
+     // Ticket confirmation content
+   );
+   ```
+
+These React Router features helped create a smoother navigation flow and better user experience in the application, especially for handling form submissions and protected routes.
 
 ### Continued development
 
-I will continue to work on the form validation and accessibility features.
+In future I plan to focus on:
+
+- Enhancing form validation with more detailed error messages
+- Improving accessibility features with ARIA labels and keyboard navigation
+- Adding form data persistence using local storage
+- Implementing a more robust image upload validation system
+- Adding animation transitions between route changes
 
 ## Author
 
